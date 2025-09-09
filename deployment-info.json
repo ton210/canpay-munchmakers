@@ -1,0 +1,67 @@
+{
+  "version": "1.0.0",
+  "build_date": "2024-12-09",
+  "cdn_url": "https://pub-0cf6e905891a477fbe1dc1b8360ef92c.r2.dev",
+  "features": [
+    "CanPay-branded store",
+    "4 product categories with variants",
+    "Mobile-optimized responsive design",
+    "Shopping cart functionality",
+    "R2 CDN optimized images",
+    "CanPay checkout integration ready"
+  ],
+  "products": {
+    "aluminum-ashtray": {
+      "name": "CanPay Aluminum Ashtray",
+      "price": 24.99,
+      "variants": [
+        "Black",
+        "Blue",
+        "Gold",
+        "Gray",
+        "Green",
+        "Purple",
+        "Red",
+        "Rose Gold",
+        "Silver"
+      ]
+    },
+    "aluminum-grinder": {
+      "name": "CanPay Aluminum Grinder",
+      "price": 39.99,
+      "variants": [
+        "Black",
+        "Blue",
+        "Gold",
+        "Green",
+        "Gunmetal Grey",
+        "Pink",
+        "Purple",
+        "Red",
+        "Rose Gold"
+      ]
+    },
+    "joint-case": {
+      "name": "CanPay Joint Case",
+      "price": 19.99,
+      "variants": [
+        "Black",
+        "Blue",
+        "Gold",
+        "Green",
+        "Grey",
+        "Red",
+        "Rose Gold",
+        "Silver"
+      ]
+    },
+    "rolling-tray": {
+      "name": "CanPay Tin Rolling Tray",
+      "price": 14.99,
+      "variants": [
+        "18\" x 14\"",
+        "27\" x 16\""
+      ]
+    }
+  }
+}
