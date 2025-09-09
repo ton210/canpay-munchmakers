@@ -27,7 +27,14 @@ class ShoppingCart {
   }
 
   buyWithCanPay(button) {
+    console.log('Buy with CanPay clicked!', button);
+    
     const productCard = button.closest('.product-card');
+    if (!productCard) {
+      console.error('No product card found');
+      return;
+    }
+    
     const productId = productCard.dataset.productId;
     const title = productCard.querySelector('.product-title').textContent;
     const price = parseFloat(productCard.querySelector('.product-price').textContent.replace('$', ''));
@@ -40,6 +47,8 @@ class ShoppingCart {
     const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
 
     const itemId = `${productId}-${variant}`;
+    
+    console.log('Product details:', { productId, title, price, variant, quantity });
     
     // Clear cart and add only this item
     this.items = [{
@@ -55,6 +64,7 @@ class ShoppingCart {
     this.saveCart();
     this.updateCartCount();
     
+    console.log('Redirecting to cart.html...');
     // Go directly to cart/checkout page
     window.location.href = 'cart.html';
   }
