@@ -172,6 +172,7 @@ class ShoppingCart {
       return;
     }
 
+<<<<<<< HEAD
     const checkoutBtn = document.querySelector('.canpay-checkout');
     const originalText = checkoutBtn.textContent;
     
