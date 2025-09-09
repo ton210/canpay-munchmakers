@@ -1,0 +1,30 @@
+# CanPay Configuration (contains sensitive credentials)
+canpay-config.php
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cache files
+cache/
+tmp/
+
+# Backup files
+*.bak
+*.backup
