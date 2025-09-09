@@ -7,9 +7,9 @@ class ShoppingCart {
 
   bindEvents() {
     document.addEventListener('click', (e) => {
-      if (e.target.matches('.add-to-cart')) {
+      if (e.target.matches('.buy-with-canpay')) {
         e.preventDefault();
-        this.addToCart(e.target);
+        this.buyWithCanPay(e.target);
       } else if (e.target.matches('.quantity-btn')) {
         this.updateQuantity(e.target);
       } else if (e.target.matches('.variant-option')) {
@@ -26,7 +26,7 @@ class ShoppingCart {
     });
   }
 
-  addToCart(button) {
+  buyWithCanPay(button) {
     const productCard = button.closest('.product-card');
     const productId = productCard.dataset.productId;
     const title = productCard.querySelector('.product-title').textContent;
@@ -40,25 +40,23 @@ class ShoppingCart {
     const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
 
     const itemId = `${productId}-${variant}`;
-    const existingItem = this.items.find(item => item.id === itemId);
-
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      this.items.push({
-        id: itemId,
-        productId,
-        title,
-        variant,
-        price,
-        quantity,
-        image
-      });
-    }
+    
+    // Clear cart and add only this item
+    this.items = [{
+      id: itemId,
+      productId,
+      title,
+      variant,
+      price,
+      quantity,
+      image
+    }];
 
     this.saveCart();
     this.updateCartCount();
-    this.showAddedToCartMessage(title, variant);
+    
+    // Go directly to cart/checkout page
+    window.location.href = 'cart.html';
   }
 
   removeItem(itemId) {
@@ -158,10 +156,6 @@ class ShoppingCart {
     document.querySelector('.cart-summary').style.display = 'block';
   }
 
-  showAddedToCartMessage(title, variant) {
-    // Simple notification - could be enhanced with a toast system
-    alert(`Added ${title} (${variant}) to cart!`);
-  }
 
   saveCart() {
     localStorage.setItem('cartItems', JSON.stringify(this.items));
