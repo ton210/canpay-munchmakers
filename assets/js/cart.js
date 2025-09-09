@@ -161,7 +161,6 @@ class ShoppingCart {
     document.querySelector('.cart-summary').style.display = 'block';
   }
 
-
   saveCart() {
     localStorage.setItem('cartItems', JSON.stringify(this.items));
   }
@@ -172,7 +171,6 @@ class ShoppingCart {
       return;
     }
 
-<<<<<<< HEAD
     const checkoutBtn = document.querySelector('.canpay-checkout');
     const originalText = checkoutBtn.textContent;
     
@@ -183,27 +181,12 @@ class ShoppingCart {
       
       const total = this.getTotal();
       
-      // Step 1: Create intent_id with backend
-      const intentResponse = await fetch('canpay-handler.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          action: 'create_intent',
-          amount: total.toFixed(2),
-          delivery_fee: '0'
-        })
-      });
+      // For demo purposes, we'll create a mock intent_id
+      // In production, this should come from your backend
+      const mockIntentId = `intent_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       
-      const intentResult = await intentResponse.json();
-      
-      if (!intentResult.success) {
-        throw new Error(intentResult.error || 'Failed to create payment intent');
-      }
-      
-      // Step 2: Launch CanPay widget
-      await this.launchCanPayWidget(intentResult.intent_id, total);
+      // Launch CanPay widget directly
+      await this.launchCanPayWidget(mockIntentId, total);
       
     } catch (error) {
       console.error('CanPay checkout error:', error);
@@ -274,25 +257,16 @@ class ShoppingCart {
 
   async handlePaymentResult(response) {
     try {
-      // Verify payment with backend
-      const verifyResponse = await fetch('canpay-handler.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          action: 'verify_payment',
-          response: response.response,
-          signature: response.signature
-        })
-      });
+      // For demo purposes, we'll accept the payment response directly
+      // In production, you should verify the payment with your backend
       
-      const verifyResult = await verifyResponse.json();
+      console.log('Payment response received:', response);
       
-      if (verifyResult.success) {
-        // Payment successful
-        const paymentData = JSON.parse(response.response);
-        
+      // Parse the response data
+      const paymentData = JSON.parse(response.response);
+      
+      // Check if payment was successful
+      if (paymentData.payment_status === 'processed' || paymentData.status === 'success') {
         this.showPaymentSuccess(paymentData);
         
         // Clear cart after successful payment
@@ -300,9 +274,8 @@ class ShoppingCart {
         this.saveCart();
         this.updateCartCount();
         this.renderCart();
-        
       } else {
-        throw new Error(verifyResult.error || 'Payment verification failed');
+        throw new Error('Payment was not processed successfully');
       }
       
     } catch (error) {
@@ -317,9 +290,9 @@ class ShoppingCart {
       <div class="payment-success">
         <div class="success-icon">✅</div>
         <h2>Payment Successful!</h2>
-        <p>Transaction ID: ${paymentData.canpay_transaction_number}</p>
-        <p>Amount: $${paymentData.amount}</p>
-        <p>Time: ${new Date(paymentData.transaction_time).toLocaleString()}</p>
+        <p>Transaction ID: ${paymentData.canpay_transaction_number || 'DEMO_' + Date.now()}</p>
+        <p>Amount: $${paymentData.amount || this.getTotal().toFixed(2)}</p>
+        <p>Time: ${new Date().toLocaleString()}</p>
         <a href="index.html" class="btn btn-primary">Continue Shopping</a>
       </div>
     `;
